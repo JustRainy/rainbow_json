@@ -1,8 +1,6 @@
-from rainbow_json.base import JObject
+from rainbow_json.bases import JObject
 from rainbow_json.exception import NotJObjectError
-from rainbow_json.utils.property import Property
 from json import loads, dumps
-import inspect
 
 
 
@@ -13,31 +11,21 @@ class JsonSerializer:
         json_dict: dict = loads(json)
         if _type == dict:
             return json_dict
-        else:
-            #try:
-                if issubclass(_type, JObject):
-                    obj = _type()
-                    for i in inspect.getmembers(obj):
-                        if not isinstance(i[1], Property):
-                            continue
-                        else:
-                            if(i[1].iterable):
-                                #TODO: iterable
-                                ...
-                            else:
-                                if(issubclass(i[1].type, JObject)):
-                                    obj.__dict__[i[0].lstrip("_")] = JsonSerializer.diserialize(i[1].type, dumps(json_dict.get(i[1].name)))
-                                else:
-                                    if(i[1].type == type(json_dict.get(i[1].name))):
-                                        obj.__dict__[i[0].lstrip("_")] = json_dict.get(i[1].name)
-                                    else:
-                                        raise TypeError("this attribute doesn't match the type of the json value")
-                    return obj
+        elif issubclass(_type, JObject):
+            obj = _type()
+            for i in (tmp := obj._index):
+                if(tmp[i].iterable):
+                    # TODO: iterable
+                        ...
+                elif(issubclass(tmp[i].type, JObject)):
+                    obj.__dict__[i] = JsonSerializer.diserialize(tmp[i].type, dumps(json_dict.get(tmp[i].name)))
+                elif(tmp[i].type == type(json_dict.get(tmp[i].name))):
+                    obj.__dict__[i] = json_dict.get(tmp[i].name)
                 else:
-                    raise NotJObjectError("this class is not a json object")
-
-            #except Exception as e:
-                #raise e
+                    raise TypeError("this attribute doesn't match the type of the json value")
+            return obj
+        else:
+            raise NotJObjectError("this class is not a json object")
 
     @staticmethod
     def serialize(obj: object) -> str:
@@ -45,11 +33,12 @@ class JsonSerializer:
             raise NotJObjectError("this class is not a json object")
         else:
             json = {}
-            for key in (d := obj.__dict__):
-                if(isinstance(d[key], JObject)):
-                    json[getattr(obj, f"_{key}").name] = loads(JsonSerializer.serialize(d[key]))
+            tmp = obj.__dict__
+            for key in (tmp1 := obj._index):
+                if(isinstance(tmp[key], JObject)):
+                    json[tmp1[key].name] = loads(JsonSerializer.serialize(tmp[key]))
                 else:
-                    json[getattr(obj, f"_{key}").name] = d[key]
+                    json[tmp1[key].name] = tmp[key]
             
             return dumps(json)
 
