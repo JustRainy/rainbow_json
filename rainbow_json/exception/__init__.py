@@ -1,4 +1,4 @@
-from rainbow_json.exception.not_jobject_error import NotJObjectError
+from rainbow_json.exception.error import NotJObjectError
 
 
 

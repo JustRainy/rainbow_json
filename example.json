@@ -1,1 +1,22 @@
-{"class": 114514, "detail": {"hobby": "rap", "idol": "kun"}, "name": "mike"}
+{
+    "class": 1, 
+    "detail": [
+        {
+            "hobby": "chang", 
+            "idol": "i"
+        }, 
+        {
+            "hobby": "tiao", 
+            "idol": "k"
+        }, 
+        {
+            "hobby": "rap", 
+            "idol": "u"
+        }, 
+        {
+            "hobby": "basketball", 
+            "idol": "n"
+        }
+        ], 
+    "name": "mike"
+}
