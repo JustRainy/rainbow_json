@@ -1,22 +1,22 @@
 {
-    "class": 1, 
+    "class": 1,
     "detail": [
         {
-            "hobby": "chang", 
+            "hobby": "chang",
             "idol": "i"
-        }, 
+        },
         {
-            "hobby": "tiao", 
+            "hobby": "tiao",
             "idol": "k"
-        }, 
+        },
         {
-            "hobby": "rap", 
+            "hobby": "rap",
             "idol": "u"
-        }, 
+        },
         {
-            "hobby": "basketball", 
+            "hobby": "basketball",
             "idol": "n"
         }
-        ], 
+    ],
     "name": "mike"
 }

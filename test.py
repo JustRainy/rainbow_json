@@ -1,6 +1,7 @@
 from rainbow_json.utils import json_property, JsonSerializer
 from rainbow_json.bases import JObject
 from typing import Any
+import json as js
 
 
 
@@ -8,8 +9,6 @@ with open("example.json") as f:
     json = f.read()
 
 class Char(JObject):
-    def __init__(self) -> None: super().__init__()
-
     @json_property("hobby", str)
     def hobby(self): ...
 
@@ -18,9 +17,7 @@ class Char(JObject):
 
 
 class Student(JObject):
-    def __init__(self) -> None: super().__init__()
-
-    @json_property("detail", object, is_iterable = True)
+    @json_property("detail", Char, is_iterable = True)
     def detail(self): ...
 
     @json_property("class", int)
@@ -28,14 +25,38 @@ class Student(JObject):
 
     @json_property("name", Any)
     def name(self): ...
-
 a: Student = JsonSerializer.diserialize(Student, json)
-print(a.detail[0]["hobby"])
-a.detail[2]["hobby"] = "rap"
-a.cls = 1
+#print(a.detail[0].ikun)
+#a.detail[2].hobby = "rap"
+#a.cls = 1
 #b = JsonSerializer.serialize(a)
 #print(b)
 print(a._index)
 print(a.__dict__)
+b = {
+    "class": 1, 
+    "detail": [
+        {
+            "hobby": "chang", 
+            "idol": "i"
+        }, 
+        {
+            "hobby": "tiao", 
+            "idol": "k"
+        }, 
+        {
+            "hobby": "rap", 
+            "idol": "u"
+        }, 
+        {
+            "hobby": "basketball", 
+            "idol": "n"
+        }
+        ], 
+    "name": "mike"
+}
+with open("example.json", "w") as f:
+    f.write(JsonSerializer.serialize(b))
 #with open("example.json", "w") as f:
     #f.write(b)
+print(a.detail[0].ikun)
