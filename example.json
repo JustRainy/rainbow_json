@@ -18,5 +18,11 @@
             "idol": "n"
         }
     ],
-    "name": "mike"
+    "name": "mike",
+    "friends": [
+        {
+            "hobby": "s",
+            "idol": "m"
+        }
+    ]
 }

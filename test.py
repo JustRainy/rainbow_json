@@ -1,7 +1,7 @@
 from rainbow_json.utils import json_property, JsonSerializer
 from rainbow_json.bases import JObject
 from typing import Any
-import json as js
+import time
 
 
 
@@ -25,7 +25,12 @@ class Student(JObject):
 
     @json_property("name", Any)
     def name(self): ...
+
+    @json_property("friends", Char, is_iterable = True)
+    def e(self): ...
+t = time.perf_counter()
 a: Student = JsonSerializer.diserialize(Student, json)
+print(f"cost: {time.perf_counter() - t: .8f} s")
 #print(a.detail[0].ikun)
 #a.detail[2].hobby = "rap"
 #a.cls = 1
@@ -33,30 +38,13 @@ a: Student = JsonSerializer.diserialize(Student, json)
 #print(b)
 print(a._index)
 print(a.__dict__)
-b = {
-    "class": 1, 
-    "detail": [
-        {
-            "hobby": "chang", 
-            "idol": "i"
-        }, 
-        {
-            "hobby": "tiao", 
-            "idol": "k"
-        }, 
-        {
-            "hobby": "rap", 
-            "idol": "u"
-        }, 
-        {
-            "hobby": "basketball", 
-            "idol": "n"
-        }
-        ], 
-    "name": "mike"
-}
-with open("example.json", "w") as f:
-    f.write(JsonSerializer.serialize(b))
+#b = {
+    #"class": 1, 
+    #"detail": [
+ #
+#with open("example.json", "w") as f:
+    #f.write(JsonSerializer.serialize(b))
 #with open("example.json", "w") as f:
     #f.write(b)
 print(a.detail[0].ikun)
+print(a.e[0].hobby)
